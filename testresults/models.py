@@ -141,6 +141,12 @@ class TestResult(models.Model):
     def __unicode__(self):
         return '%s.%s' % (self.method.testclass, self.method.name)
 
+    def get_main_code_unit(self):
+        code_units = self.codeunits.filter(unit_type = 'Test Method')
+        if not code_units:
+            return None
+        return code_units[0]
+
     def update_summary_fields(self):
         limits = self.codeunits.aggregate(
             models.Count('id'),

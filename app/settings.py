@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'mptt',
     'django_extensions',
     'tokenapi',
+    'bootstrap3',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -15,9 +15,30 @@ from tokenapi.http import JsonError
 
 from testresults.forms import TestResultUploadForm
 from testresults.models import TestClass
+from testresults.models import TestExecution
 from testresults.models import TestMethod
+from testresults.models import TestResult
 from testresults.models import TestCodeUnit
 from testresults.importer import STATS_MAP
+
+def testexecutions_list(request):
+    executions = Exection.objects.all()
+    context = RequestContext(request, {'executions': executions})
+    return render_to_response('testresults/testexecutions_list.html', context)
+
+def testexecution_detail(request, execution_id):
+    execution = get_object_or_404(TestExecution, id=execution_id)
+    data = {'execution': execution}
+
+    context = RequestContext(request, data)
+    return render_to_response('testresults/testexecution_detail.html', context)
+
+def testresult_detail(request, testresult_id):
+    testresult = get_object_or_404(TestResult, id=testresult_id)
+    data = {'testresult': testresult}
+
+    context = RequestContext(request, data)
+    return render_to_response('testresults/testresult_detail.html', context)
 
 def testclasses_list(request):
     testclasses = TestClass.objects.all()
