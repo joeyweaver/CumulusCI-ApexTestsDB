@@ -14,8 +14,9 @@ urlpatterns = patterns('',
     url(r'^testclasses$', 'testresults.views.testclasses_list'),
     url(r'^testclasses/(?P<testclass_id>[0-9]+)$', 'testresults.views.testclass_detail'),
 #    url(r'^testclasses/(?P<testclass_id>[0-9]+)/execution/(?P<execution_id>[0-9]+)$', 'testresults.views.testclass_execution_detail'),
-    url(r'^testmethods$', 'testresults.views.testmethods_list'),
+#    url(r'^testmethods$', 'testresults.views.testmethods_list'),
     url(r'^testmethods/(?P<testmethod_id>[0-9]+)$', 'testresults.views.testmethod_detail'),
 #    url(r'^methods/(?P<testclass_id>[0-9]+)/execution/(?P<execution_id>[0-9]+)$', 'testresults.views.testclass_execution_detail'),
+    url(r'^upload_test_result$', 'testresults.views.upload_test_result'),
 
 )

@@ -8,4 +8,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('testresults.urls')),
+    url(r'', include('tokenapi.urls')),
 )

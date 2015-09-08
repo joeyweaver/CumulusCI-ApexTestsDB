@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'testresults',
     'mptt',
     'django_extensions',
+    'tokenapi',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -50,6 +51,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'tokenapi.backends.TokenBackend',
+)
+
+# We want to use tokens as long term auth for the upload test result api
+TOKEN_TIMEOUT_DAYS = 99999
 
 ROOT_URLCONF = 'app.urls'
 

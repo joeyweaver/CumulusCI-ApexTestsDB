@@ -1,11 +1,19 @@
 import arrow
 import json
+
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
+
+from tokenapi.decorators import token_required
+from tokenapi.http import JsonResponse
+from tokenapi.http import JsonError
+
+from testresults.forms import TestResultUploadForm
 from testresults.models import TestClass
 from testresults.models import TestMethod
 from testresults.models import TestCodeUnit
@@ -115,3 +123,54 @@ def testmethod_metric(request, testmethod_id, metric):
         })
 
     return HttpResponse(content_type = 'application/json')
+
+@csrf_exempt
+@token_required
+def upload_test_result(request):
+
+    if request.method == 'POST':
+        form = TestResultUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            f = request.FILES['results_file']
+            results = f.read()
+            results = json.loads(results)
+
+            repo_url =  form.cleaned_data['repository_url']
+            repo_name =  '/'.join(repo_url.split('/')[3:5])
+            branch_url = repo_url + '/trees/' + form.cleaned_data['branch_name']
+            commit_url = repo_url + '/trees/' + form.cleaned_data['commit_sha']
+
+            test_results = {
+                'package': {
+                    'name': form.cleaned_data['package'],
+                },
+                'repository': {
+                    'name': repo_name,
+                    'url': repo_url,
+                },
+                'branch': {
+                    'name': form.cleaned_data['branch_name'],
+                    'url': branch_url,
+                },
+                'commit': {
+                    'name': form.cleaned_data['commit_sha'],
+                    'url': commit_url,
+                },
+                'execution': {
+                    'name': form.cleaned_data['execution_name'],
+                    'url': form.cleaned_data['execution_url'],
+                },
+                'results': results,
+            }
+
+            from testresults.importer import import_test_results
+            execution = import_test_results(test_results)
+            return JsonResponse({'execution_id': execution.id})
+    else:
+        return JsonError('Only POST is allowed')
+        #form = TestResultUploadForm()
+
+    context = RequestContext(request, {'form': form})
+
+    return render_to_response('testresults/upload_test_result.html', context)
+

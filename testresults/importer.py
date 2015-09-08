@@ -1,4 +1,3 @@
-import json
 from testresults.models import *
 
 STATS_MAP = {
@@ -14,6 +13,18 @@ STATS_MAP = {
     'sosl_queries': 'Number of SOSL queries',
     'queueable_jobs': 'Number of queueable jobs added to the queue',
     'callouts': 'Number of callouts',
+    'test_email_invocations': 'TESTING_LIMITS: Number of Email Invocations',
+    'test_soql_queries': 'TESTING_LIMITS: Number of SOQL queries',
+    'test_future_calls': 'TESTING_LIMITS: Number of future calls',
+    'test_dml_rows': 'TESTING_LIMITS: Number of DML rows',
+    'test_cpu_time': 'TESTING_LIMITS: Maximum CPU time',
+    'test_query_rows': 'TESTING_LIMITS: Number of query rows',
+    'test_dml_statements': 'TESTING_LIMITS: Number of DML statements',
+    'test_mobile_apex_push': 'TESTING_LIMITS: Number of Mobile Apex push calls',
+    'test_heap_size': 'TESTING_LIMITS: Maximum heap size',
+    'test_sosl_queries': 'TESTING_LIMITS: Number of SOSL queries',
+    'test_queueable_jobs': 'TESTING_LIMITS: Number of queueable jobs added to the queue',
+    'test_callouts': 'TESTING_LIMITS: Number of callouts',
 }
 
 def import_test_results(results):
@@ -28,8 +39,6 @@ def import_test_results(results):
         name = results['package']['name'],
         url = package_url,
     )
-    #if created:
-    #    package.save()
 
     repository, created = Repository.objects.get_or_create(
         name = results['repository']['name'],
@@ -108,11 +117,13 @@ def import_test_results(results):
                 setattr(testcodeunit, used, get_value_from_stats(result['Stats'], used))
                 allowed = '%s_allowed' % stat
                 setattr(testcodeunit, allowed, get_value_from_stats(result['Stats'], allowed))
-                
+
             testcodeunit.save()
 
         if 'Children' in result and result['Children']:
             process_children(result['Children'], testresult, testcodeunit)
+
+    return execution
 
 def process_children(children, testresult, parent):
     if not children:
@@ -137,10 +148,7 @@ def process_children(children, testresult, parent):
             testcodeunit.sobject = child['unit_info'].get('object')
             testcodeunit.event = child['unit_info'].get('event')
 
-        try:
-            testcodeunit.save()
-        except:
-            print 'SKIPPING: %s' % child
+        testcodeunit.save()
 
         if child['children']:
             process_children(child['children'], testresult, testcodeunit)
