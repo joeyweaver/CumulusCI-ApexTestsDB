@@ -64,7 +64,7 @@
             {% for result in class_results.results %}
               <tr>
                 <td><a href="/results/{{ result.id }}">{{ result.result.method.name }}</a></td>
-                <td class="{% if result.outcome == 'Pass' %}success{% else %}danger{% endif %}">{{ result.result.outcome }}</td>
+                <td class="{% if result.result.outcome == 'Pass' %}success{% else %}danger{% endif %}">{{ result.result.outcome }}</td>
                 <td>{{ result.result.duration }}</td>
                 {% for column in result.columns %}
                 <td>{{ column.value }}</td>
