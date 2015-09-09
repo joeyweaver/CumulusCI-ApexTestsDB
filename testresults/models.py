@@ -89,52 +89,82 @@ class TestResult(models.Model):
     message = models.TextField(null=True, blank=True)
     email_invocations_used = models.IntegerField(null=True, blank=True, db_index=True)
     email_invocations_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    email_invocations_percent = models.IntegerField(null=True, blank=True, db_index=True)
     soql_queries_used = models.IntegerField(null=True, blank=True, db_index=True)
     soql_queries_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    soql_queries_percent = models.IntegerField(null=True, blank=True, db_index=True)
     future_calls_used = models.IntegerField(null=True, blank=True, db_index=True)
     future_calls_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    future_calls_percent = models.IntegerField(null=True, blank=True, db_index=True)
     dml_rows_used = models.IntegerField(null=True, blank=True, db_index=True)
     dml_rows_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    dml_rows_percent = models.IntegerField(null=True, blank=True, db_index=True)
     cpu_time_used = models.IntegerField(null=True, blank=True, db_index=True)
     cpu_time_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    cpu_time_percent = models.IntegerField(null=True, blank=True, db_index=True)
     query_rows_used = models.IntegerField(null=True, blank=True, db_index=True)
     query_rows_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    query_rows_percent = models.IntegerField(null=True, blank=True, db_index=True)
     dml_statements_used = models.IntegerField(null=True, blank=True, db_index=True)
     dml_statements_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    dml_statements_percent = models.IntegerField(null=True, blank=True, db_index=True)
     mobile_apex_push_used = models.IntegerField(null=True, blank=True, db_index=True)
     mobile_apex_push_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    mobile_apex_push_percent = models.IntegerField(null=True, blank=True, db_index=True)
     heap_size_used = models.IntegerField(null=True, blank=True, db_index=True)
     heap_size_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    heap_size_percent = models.IntegerField(null=True, blank=True, db_index=True)
     sosl_queries_used = models.IntegerField(null=True, blank=True, db_index=True)
     sosl_queries_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    sosl_queries_percent = models.IntegerField(null=True, blank=True, db_index=True)
     queueable_jobs_used = models.IntegerField(null=True, blank=True, db_index=True)
     queueable_jobs_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    queueable_jobs_percent = models.IntegerField(null=True, blank=True, db_index=True)
     callouts_used = models.IntegerField(null=True, blank=True, db_index=True)
     callouts_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    callouts_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_email_invocations_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_email_invocations_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_email_invocations_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_soql_queries_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_soql_queries_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_soql_queries_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_future_calls_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_future_calls_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_future_calls_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_dml_rows_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_dml_rows_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_dml_rows_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_cpu_time_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_cpu_time_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_cpu_time_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_query_rows_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_query_rows_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_query_rows_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_dml_statements_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_dml_statements_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_dml_statements_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_mobile_apex_push_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_mobile_apex_push_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_mobile_apex_push_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_heap_size_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_heap_size_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_heap_size_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_sosl_queries_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_sosl_queries_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_sosl_queries_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_queueable_jobs_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_queueable_jobs_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_queueable_jobs_percent = models.IntegerField(null=True, blank=True, db_index=True)
     test_callouts_used = models.IntegerField(null=True, blank=True, db_index=True)
     test_callouts_allowed = models.IntegerField(null=True, blank=True, db_index=True)
+    test_callouts_percent = models.IntegerField(null=True, blank=True, db_index=True)
+    worst_limit = models.CharField(max_length=255, null=True, blank=True, db_index=True)
+    worst_limit_percent = models.IntegerField(null=True, blank=True, db_index=True)
+    worst_limit_nontest = models.CharField(max_length=255, null=True, blank=True, db_index=True)
+    worst_limit_nontest_percent = models.IntegerField(null=True, blank=True, db_index=True)
+    worst_limit_test = models.CharField(max_length=255, null=True, blank=True, db_index=True)
+    worst_limit_test_percent = models.IntegerField(null=True, blank=True, db_index=True)
 
     objects = TestResultManager()
 
@@ -147,55 +177,88 @@ class TestResult(models.Model):
             return None
         return code_units[0]
 
-    def update_summary_fields(self):
-        limits = self.codeunits.aggregate(
-            models.Count('id'),
-            models.Sum('email_invocations_used'),
-            models.Sum('soql_queries_used'),
-            models.Sum('future_calls_used'),
-            models.Sum('dml_rows_used'),
-            models.Sum('cpu_time_used'),
-            models.Sum('query_rows_used'),
-            models.Sum('dml_statements_used'),
-            models.Sum('mobile_apex_push_used'),
-            models.Sum('heap_size_used'),
-            models.Sum('sosl_queries_used'),
-            models.Sum('queueable_jobs_used'),
-            models.Sum('callouts_used'),
+    def get_limit_types(self):
+        types = (
+            'email_invocations',
+            'soql_queries',
+            'future_calls',
+            'dml_rows',
+            'cpu_time',
+            'query_rows',
+            'dml_statements',
+            'mobile_apex_push',
+            'heap_size',
+            'sosl_queries',
+            'queueable_jobs',
+            'callouts',
         )
 
-        if not limits['id__count']:
-            return
+        return types
+    
 
-        codeunit = self.codeunits.all()[0]
-        self.email_invocations_allowed = codeunit.email_invocations_allowed
-        self.soql_queries_allowed = codeunit.soql_queries_allowed
-        self.future_calls_allowed = codeunit.future_calls_allowed
-        self.dml_rows_allowed = codeunit.dml_rows_allowed
-        self.cpu_time_allowed = codeunit.cpu_time_allowed
-        self.query_rows_allowed = codeunit.query_rows_allowed
-        self.dml_statements_allowed = codeunit.dml_statements_allowed
-        self.mobile_apex_push_allowed = codeunit.mobile_apex_push_allowed
-        self.heap_size_allowed = codeunit.heap_size_allowed
-        self.sosl_queries_allowed = codeunit.sosl_queries_allowed
-        self.queueable_jobs_allowed = codeunit.queueable_jobs_allowed
-        self.callouts_allowed = codeunit.callouts_allowed
+    def populate_limit_fields(self):
+        code_unit = self.get_main_code_unit()
 
-        self.email_invocations_used = limits['email_invocations_used__sum']
-        self.soql_queries_used = limits['soql_queries_used__sum']
-        self.future_calls_used = limits['future_calls_used__sum']
-        self.dml_rows_used = limits['dml_rows_used__sum']
-        self.cpu_time_used = limits['cpu_time_used__sum']
-        self.query_rows_used = limits['query_rows_used__sum']
-        self.dml_statements_used = limits['dml_statements_used__sum']
-        self.mobile_apex_push_used = limits['mobile_apex_push_used__sum']
-        self.heap_size_used = limits['heap_size_used__sum']
-        self.sosl_queries_used = limits['sosl_queries_used__sum']
-        self.queueable_jobs_used = limits['queueable_jobs_used__sum']
-        self.callouts_used = limits['callouts_used__sum']
-        
+        if not code_unit:
+            return None
+
+        limit_types = self.get_limit_types()
+
+        for limit_type in limit_types:
+            used = getattr(code_unit, '%s_used' % limit_type)
+            allowed = getattr(code_unit, '%s_allowed' % limit_type)
+            test_used = getattr(code_unit, 'test_%s_used' % limit_type)
+            test_allowed = getattr(code_unit, 'test_%s_allowed' % limit_type)
+            percent = None
+            test_percent = None
+
+            if used is not None and allowed:
+                percent = (used * 100) / allowed
+                
+            if test_used is not None and test_allowed:
+                test_percent = (test_used * 100) / test_allowed
+            
+            setattr(self, '%s_used' % limit_type, used)
+            setattr(self, '%s_allowed' % limit_type, allowed)
+            setattr(self, '%s_percent' % limit_type, percent)
+            setattr(self, 'test_%s_used' % limit_type,  test_used)
+            setattr(self, 'test_%s_allowed' % limit_type, test_allowed)
+            setattr(self, 'test_%s_percent' % limit_type, test_percent)
+
+        worst_limit = None
+        worst_limit_percent = None
+        worst_limit_nontest = None
+        worst_limit_nontest_percent = None
+        worst_limit_test = None
+        worst_limit_test_percent = None
+
+        for limit_type in limit_types:
+            percent_nontest = getattr(self, '%s_percent' % limit_type)
+            percent_test = getattr(self, 'test_%s_percent' % limit_type)
+
+            if percent_nontest > worst_limit_percent:
+                worst_limit = '%s_percent' % limit_type
+                worst_limit_percent = percent_nontest
+            if percent_nontest > worst_limit_nontest_percent:
+                worst_limit_nontest = '%s_percent' % limit_type
+                worst_limit_nontest_percent = percent_nontest
+
+            if percent_test > worst_limit_percent:
+                worst_limit = 'test_%s_percent' % limit_type
+                worst_limit_percent = percent_test
+            if percent_test > worst_limit_test_percent:
+                worst_limit_test = 'test_%s_percent' % limit_type
+                worst_limit_test_percent = percent_test
+
+        self.worst_limit = worst_limit
+        self.worst_limit_percent = worst_limit_percent
+        self.worst_limit_nontest = worst_limit_nontest
+        self.worst_limit_nontest_percent = worst_limit_nontest_percent
+        self.worst_limit_test = worst_limit_test
+        self.worst_limit_test_percent = worst_limit_test_percent
+
         self.save()
-
+        
 class TestCodeUnit(MPTTModel):
     testresult = models.ForeignKey(TestResult, related_name='codeunits')
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')

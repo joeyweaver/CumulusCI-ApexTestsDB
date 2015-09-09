@@ -123,6 +123,8 @@ def import_test_results(results):
         if 'Children' in result and result['Children']:
             process_children(result['Children'], testresult, testcodeunit)
 
+        testresult.populate_limit_fields()
+
     return execution
 
 def process_children(children, testresult, parent):
