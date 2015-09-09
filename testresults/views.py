@@ -37,7 +37,7 @@ def testexecution_detail(request, execution_id):
     results_query = execution.results.all()
 
     # Handle configurable display columns
-    columns = request.GET.get('columns', 'worst_limit,worst_limit_percent,worst_limit_test,worst_limit_test_percent')
+    columns = request.GET.get('columns', 'worst_limit,worst_limit_percent')
     columns = columns.split(',')
 
     data['columns'] = columns
@@ -74,10 +74,27 @@ def testexecution_detail(request, execution_id):
 
         result_data = {'result': result, 'columns': []}
         for column in columns:
-            result_data['columns'].append({
+            column_data = {
                 'heading': column,
                 'value': getattr(result, column),
-            })
+                'status': 'active',
+            }
+            percent = None
+            if column.find('percent') != -1:
+                percent = column_data['value']
+            elif column.find('used') != -1:
+                percent = getattr(result, column.replace('_used','_percent'))
+
+            if percent is not None:
+                if percent < 50:
+                    column_data['status'] = 'success'
+                elif percent < 70:
+                    column_data['status'] = 'info'
+                elif percent < 80:
+                    column_data['status'] = 'warning'
+                else:
+                    column_data['status'] = 'danger'
+            result_data['columns'].append(column_data)
         current_class_results.append(result_data)
         last_class = result.method.testclass
 
