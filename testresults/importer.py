@@ -61,6 +61,10 @@ def import_test_results(results):
         branch = branch,
     )
 
+    environment, created = Environment.objects.get_or_create(
+        name = results['environment']['name'],
+    )
+
     execution = TestExecution(
         name = results['execution']['name'],
         url = results['execution']['url'],
@@ -68,6 +72,7 @@ def import_test_results(results):
         repository = repository,
         branch = branch,
         commit = commit,
+        environment = environment,
     )
     execution.save()
 
