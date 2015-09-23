@@ -7,94 +7,106 @@
 
 {% load mptt_tags %}
 
-
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th>Unit</th>
-      <th>Unit Type</th>
-      <th>Event</th>
-      <th>SObject</th>
-      <th>Duration</th>
-      <th>SOQL Used</th>
-      <th>SOQL Used (Test)</th>
-      <th>DML Used</th>
-      <th>DML Used (Test)</th>
-    </tr>
-  </thead>
-  <tbody>
-{% recursetree testresult.codeunits.all %}
-    <tr>
-      <td>{{ node.unit }}</td>
-      <td>{{ node.unit_type }}</td>
-      <td>{{ node.event }}</td>
-      <td>{{ node.sobject }}</td>
-      <td>{{ node.duration }}</td>
-      <td>{{ node.soql_queries_used }}</td>
-      <td>{{ node.test_soql_queries_used }}</td>
-      <td>{{ node.dml_rows_used }}</td>
-      <td>{{ node.test_dml_rows_used }}</td>
-    </tr>
-    {% if not node.is_leaf_node %}
-    <tr>
-      <td colspan="9">
-        <table class="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th>Unit</th>
-              <th>Unit Type</th>
-              <th>Event</th>
-              <th>SObject</th>
-              <th>Duration</th>
-              <th>SOQL Used</th>
-              <th>SOQL Used (Test)</th>
-              <th>DML Used</th>
-              <th>DML Used (Test)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{ children }}
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    {% endif %}
-{% endrecursetree %}
-  </tbody>
-</table>
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3>Test Results #{{ testresult.id }}: {{ testresult.method.testclass.name }}.{{ testresult.method.name }}</h3>
+    </div>
+    <div class="panel-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">Build</div>
+          <div class="col-md-9"><a href="{{ testresult.execution.url }}">{{ testresult.execution.name }}</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Package</div>
+          <div class="col-md-9">{{ testresult.execution.package.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Repository</div>
+          <div class="col-md-9"><a href="{{ testresult.execution.repository.url }}">{{ testresult.execution.repository.name }}</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Branch</div>
+          <div class="col-md-9"><a href="{{ testresult.execution.branch.url }}">{{ testresult.execution.branch.name }}</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Commit</div>
+          <div class="col-md-9"><a href="{{ testresult.execution.commit.url }}">{{ testresult.execution.commit.name }}</a></div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Environment</div>
+          <div class="col-md-9"><a href="{{ testresult.execution.commit.url }}">{{ testresult.execution.environment.name }}</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-{% comment %}
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th>Class</th>
-      <th>Method</th>
-      <th>Result</th>
-      <th>Duration</th>
-      <th>SOQL Used</th>
-      <th>SOQL Used (Test)</th>
-      <th>DML Used</th>
-      <th>DML Used (Test)</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for codeunit in testresults.all %}
-    {% with codeunit=result.get_main_code_unit %}
-    <tr>
-      <td>{{ result.method.testclass.name }}</td>
-      <td>{{ result.method.name }}</td>
-      <td>{{ result.outcome }}</td>
-      <td>{{ result.duration }}</td>
-      <td>{{ codeunit.soql_queries_used }}</td>
-      <td>{{ codeunit.test_soql_queries_used }}</td>
-      <td>{{ codeunit.dml_queries_used }}</td>
-      <td>{{ codeunit.test_dml_queries_used }}</td>
-    </tr>
-    {% endwith %}
-  {% endfor %}
-  <tbody>
-</table>
-{% endcomment %}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3>Test Results</h3>
+    </div>
+    <div class="panel-body">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h5>{{ class_results.class.name }}</h5></div>
+        <div class="panel-body">
+
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Unit</th>
+                <th>Unit Type</th>
+                <th>Duration</th>
+                {% comment %}
+                {% for column in columns %}
+                <th>{{ column }}</th>
+                {% endfor %}
+                {% endcomment %}
+              </tr>
+            </thead>
+            <tbody>
+            {% recursetree testresult.codeunits.all %}
+              <tr>
+                <td>{{ node.unit }}</td>
+                <td>{{ node.unit_type }}</td>
+                <td>{{ node.duration }}</td>
+                {% comment %}
+                {% for column in node.columns %}
+                <td class="{{ column.status }}">{{ column.value }}</td>
+                {% endfor %}
+                {% endcomment %}
+              </tr>
+              {% if not node.is_leaf_node %}
+              <tr>
+                <td colspan="3">
+                  <div class="panel panel-default">
+                    <div class="panel-heading"><h5>{{ class_results.class.name }}</h5></div>
+                    <div class="panel-body">
+                      <table class="table table-striped table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Unit</th>
+                            <th>Unit Type</th>
+                            <th>Duration</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {{ children }}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endif %}
+            {% endrecursetree %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

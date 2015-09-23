@@ -10,6 +10,9 @@ class Package(models.Model):
     name = models.CharField(max_length=255)
     url = models.URLField(max_length=255)
 
+    def __unicode__(self):
+        return self.name
+
 class Repository(models.Model):
     name = models.CharField(max_length=255)
     package = models.ForeignKey(Package, related_name='repositories')
@@ -18,12 +21,24 @@ class Repository(models.Model):
     username = models.CharField(max_length=255, null=True, blank=True)
     password = models.CharField(max_length=255, null=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = 'Repositories'
+
+    def __unicode__(self):
+        return self.name
+
 class Branch(models.Model):
     name = models.CharField(max_length=255, db_index=True)
     package = models.ForeignKey(Package, related_name='branches')
     repository = models.ForeignKey(Repository, related_name='branches')
     url = models.URLField(max_length=255)
     is_default = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = 'Branches'
+
+    def __unicode__(self):
+        return self.name
 
 class CommitManager(models.Manager):
 
@@ -45,6 +60,9 @@ class Commit(models.Model):
 
     objects = CommitManager()
 
+    def __unicode__(self):
+        return self.name
+
     def update_commit_date(self):
         repo_owner, repo_name = commit.repository.name.split('/')
         resp = call_api(
@@ -63,17 +81,49 @@ class TestClass(models.Model):
     name = models.CharField(max_length=255, db_index=True)
     package = models.ForeignKey(Package, related_name='testclasses')
     
+    class Meta:
+        verbose_name = 'Test Class'
+        verbose_name_plural = 'Test Classes'
+
+    def __unicode__(self):
+        return self.name
+
 class TestMethod(models.Model):
     name = models.CharField(max_length=255, db_index=True)
     testclass = models.ForeignKey(TestClass, related_name='methods')
 
+    class Meta:
+        verbose_name = 'Test Method'
+
+    def __unicode__(self):
+        return self.name
+
+class TestEnvironment(models.Model):
+    name = models.CharField(max_length=255, db_index=True)
+    description = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Test Environment'
+        verbose_name_plural = 'Test Environments'
+
+    def __unicode__(self):
+        return self.name
+
 class TestExecution(models.Model):
     name = models.CharField(max_length=255)
+    environment = models.ForeignKey(TestEnvironment, related_name='testexecutions', null=True, blank=True)
     package = models.ForeignKey(Package, related_name='testexecutions')
     repository = models.ForeignKey(Repository, related_name='testexecutions')
     branch = models.ForeignKey(Branch, related_name='testexecutions')
     commit = models.ForeignKey(Commit, related_name='testexecutions')
     url = models.URLField(max_length=255, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Test Execution'
+        verbose_name_plural = 'Test Executions'
+
+    def __unicode__(self):
+        return self.name
 
 class TestResultManager(models.Manager):
     def update_summary_fields(self):
@@ -167,6 +217,10 @@ class TestResult(models.Model):
     worst_limit_test_percent = models.IntegerField(null=True, blank=True, db_index=True)
 
     objects = TestResultManager()
+
+    class Meta:
+        verbose_name = 'Test Result'
+        verbose_name_plural = 'Test Results'
 
     def __unicode__(self):
         return '%s.%s' % (self.method.testclass, self.method.name)
@@ -318,6 +372,10 @@ class TestCodeUnit(MPTTModel):
 
     #class MPTTMeta:
     #    order_insertion_by = ['id']
+
+    class Meta:
+        verbose_name = 'Test Code Unit'
+        verbose_name_plural = 'Test Code Units'
 
     def __unicode__(self):
         return '[%s] - %s' % (self.unit_type, self.unit)

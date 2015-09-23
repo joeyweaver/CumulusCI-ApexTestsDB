@@ -256,6 +256,9 @@ def upload_test_result(request):
                     'name': form.cleaned_data['execution_name'],
                     'url': form.cleaned_data['execution_url'],
                 },
+                'environment': {
+                    'name': form.cleaned_data['environment'],
+                },
                 'results': results,
             }
 
