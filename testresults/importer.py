@@ -61,7 +61,7 @@ def import_test_results(results):
         branch = branch,
     )
 
-    environment, created = Environment.objects.get_or_create(
+    environment, created = TestEnvironment.objects.get_or_create(
         name = results['environment']['name'],
     )
 
