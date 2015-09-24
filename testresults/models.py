@@ -132,7 +132,7 @@ class TestExecution(models.Model):
     
         results = OrderedDict()
         for execution in executions:
-            for result in self.results.all():
+            for result in execution.results.all():
                 cls = result.method.testclass.name
                 method = result.method.name
         
