@@ -1,4 +1,5 @@
 import dateutil.parser
+from collections import OrderedDict
 from django.db import models
 from django import forms
 from testresults.choices import OUTCOME_CHOICES
@@ -124,6 +125,55 @@ class TestExecution(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def compare_to(self, executions):
+
+        executions = [self] + executions
+    
+        results = OrderedDict()
+        for execution in executions:
+            for result in self.results.all():
+                cls = result.method.testclass.name
+                method = result.method.name
+        
+                if not cls in results:
+                    results[cls] = OrderedDict()
+    
+                if not method in results[cls]:
+                    results[cls][method] = {}
+    
+                for limit in result.get_limit_types():
+                    limit = limit + '_used'
+                    test_limit = 'test_' + limit
+    
+                    if limit not in results[cls][method]:
+                        results[cls][method][limit] = OrderedDict()
+                    if test_limit not in results[cls][method]:
+                        results[cls][method][test_limit] = OrderedDict()
+    
+                    results[cls][method][limit][execution.id] = getattr(result, test_limit)
+                    results[cls][method][test_limit][execution.id] = getattr(result, test_limit)
+
+        diff = OrderedDict()
+       
+        for cls, methods in results.items():
+            for method, limits in methods.items():
+                for limit, executions in limits.items():
+                    # Are any values different between the executions?
+                    if len(set(executions.values())) > 1:
+                        if not cls in diff:
+                            diff[cls] = OrderedDict()
+    
+                        if not method in diff[cls]:
+                            diff[cls][method] = {}
+
+                        if limit not in diff[cls][method]:
+                            diff[cls][method][limit] = OrderedDict()
+
+                        diff[cls][method][limit] = executions
+
+        return diff
+    
 
 class TestResultManager(models.Manager):
     def update_summary_fields(self):
