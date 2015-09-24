@@ -141,7 +141,7 @@ class TestExecution(models.Model):
     
                 if not method in results[cls]:
                     results[cls][method] = {}
-    
+   
                 for limit in result.get_limit_types():
                     limit = limit + '_used'
                     test_limit = 'test_' + limit

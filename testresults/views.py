@@ -113,7 +113,13 @@ def testexecutions_compare(request, execution1_id, execution2_id):
     execution2 = get_object_or_404(TestExecution, id=execution2_id)
 
     diff = execution1.compare_to([execution2])
-    return HttpResponse(str(diff))
+
+    context = {
+        'execution1': execution1,
+        'execution2': execution2,
+        'diff': diff,
+    }
+    return render_to_response('testresults/testexecution_compare.html', context)
 
 def testresult_detail(request, testresult_id):
     testresult = get_object_or_404(TestResult, id=testresult_id)
