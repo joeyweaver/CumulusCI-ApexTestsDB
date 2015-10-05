@@ -151,7 +151,7 @@ class TestExecution(models.Model):
                     if test_limit not in results[cls][method]:
                         results[cls][method][test_limit] = OrderedDict()
     
-                    results[cls][method][limit][execution.id] = getattr(result, test_limit)
+                    results[cls][method][limit][execution.id] = getattr(result, limit)
                     results[cls][method][test_limit][execution.id] = getattr(result, test_limit)
 
         diff = OrderedDict()
