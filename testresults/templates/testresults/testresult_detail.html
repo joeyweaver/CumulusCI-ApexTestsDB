@@ -18,6 +18,10 @@
     <div class="panel-body">
       <div class="container">
         <div class="row">
+          <div class="col-md-3">Test Execution</div>
+          <div class="col-md-9"><a href="/executions/{{ testresult.execution.id }}">#{{ testresult.execution.id }}</a></div>
+        </div>
+        <div class="row">
           <div class="col-md-3">Build</div>
           <div class="col-md-9"><a href="{{ testresult.execution.url }}">{{ testresult.execution.name }}</a></div>
         </div>
