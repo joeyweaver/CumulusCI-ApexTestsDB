@@ -17,6 +17,7 @@
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
+            <th>Id</th>
             <th>Package</th>
             <th>Build</th>
             <th>Repository</th>
@@ -28,6 +29,7 @@
         <tbody>
         {% for execution in executions %}
           <tr>
+            <td><a href="/executions/{{ execution.id }}">{{ execution.id }}</a></td>
             <td>{{ execution.package.name }}</a></td>
             <td><a href="{{ execution.build_url }}">{{ execution.build_name }}</a></td>
             <td><a href="{{ execution.repository.url }}">{{ execution.repository.name }}</a></td>

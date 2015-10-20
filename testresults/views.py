@@ -103,6 +103,9 @@ def testexecution_detail(request, execution_id):
        results_by_class.append({'class': last_class, 'results': current_class_results})
 
     data['results_by_class'] = results_by_class
+    data['sort'] = sort
+    data['custom_sort'] = custom_sort
+    data['columns'] = columns
 
 
     context = RequestContext(request, data)

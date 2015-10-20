@@ -9,6 +9,12 @@
 {% bootstrap_messages %}
 
 <div class="container">
+  {% if custom_sort %}
+    Sorted on {{ sort }}.  <a href="/executions/{{ execution.id }}">Undo Custom Sorting</a>
+  {% else %}
+    <a href="/executions/{{ execution.id }}?sort=-worst_limit_percent&columns=worst_limit,worst_limit_percent">Sort by worst percent used</a>
+  {% endif %}
+
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h3>Test Execution #{{ execution.id }}</h3>
