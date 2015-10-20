@@ -22,7 +22,7 @@ from testresults.models import TestCodeUnit
 from testresults.importer import STATS_MAP
 
 def testexecutions_list(request):
-    executions = Exection.objects.all()
+    executions = TestExecution.objects.all().order_by('-id')
     context = RequestContext(request, {'executions': executions})
     return render_to_response('testresults/testexecutions_list.html', context)
 

@@ -10,7 +10,6 @@ django-nvd3==0.7.7
 django-tokenapi==0.2.3
 numpy==1.9.1
 psycopg2==2.5.4
-pydot==1.0.28
 pyparsing==1.5.7
 python-dateutil==2.4.0
 python-nvd3==0.13.5

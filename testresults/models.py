@@ -118,6 +118,7 @@ class TestExecution(models.Model):
     branch = models.ForeignKey(Branch, related_name='testexecutions')
     commit = models.ForeignKey(Commit, related_name='testexecutions')
     url = models.URLField(max_length=255, null=True, blank=True)
+    date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Test Execution'
