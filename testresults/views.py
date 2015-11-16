@@ -271,7 +271,7 @@ def upload_test_result(request):
                 'environment': {
                     'name': form.cleaned_data['environment_name'],
                 },
-                'results_url': form.cleaned_data['results_url'],
+                'results_url': form.cleaned_data['results_file_url'],
             }
 
             from testresults.importer import import_test_results
