@@ -1,3 +1,6 @@
+import urllib
+import json
+from django_rq import job
 from testresults.models import *
 
 STATS_MAP = {
@@ -27,9 +30,15 @@ STATS_MAP = {
     'test_callouts': 'TESTING_LIMITS: Number of callouts',
 }
 
+@job
 def import_test_results(results):
     classes = {}
     methods = {}
+
+    # If a results_url was passed, retrieve the file and parse it
+    if 'results_url' in results:
+        results_file = urllib.open(results['results_url'])
+        results['results'] = json.loads(results_file.read())
 
     package_url = results['package'].get('url', None)
     if not package_url:

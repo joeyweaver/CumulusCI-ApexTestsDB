@@ -241,12 +241,8 @@ def testmethod_metric(request, testmethod_id, metric):
 def upload_test_result(request):
 
     if request.method == 'POST':
-        form = TestResultUploadForm(request.POST, request.FILES)
+        form = TestResultUploadForm(request.POST)
         if form.is_valid():
-            f = request.FILES['results_file']
-            results = f.read()
-            results = json.loads(results)
-
             repo_url =  form.cleaned_data['repository_url']
             repo_name =  '/'.join(repo_url.split('/')[3:5])
             branch_url = repo_url + '/trees/' + form.cleaned_data['branch_name']
@@ -275,11 +271,11 @@ def upload_test_result(request):
                 'environment': {
                     'name': form.cleaned_data['environment_name'],
                 },
-                'results': results,
+                'results_url': form.cleaned_data['results_url'],
             }
 
             from testresults.importer import import_test_results
-            execution = import_test_results(test_results)
+            execution = import_test_results.delay(test_results)
             return JsonResponse({'execution_id': execution.id})
     else:
         return JsonError('Only POST is allowed')

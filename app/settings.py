@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'tokenapi',
     'bootstrap3',
+    'django_rq',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -103,3 +104,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+RQ_QUEUES = {
+    'default': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379'), # If you're on Heroku
+        'DB': 0,
+        'timeout': 1800,
+    },
+    'high': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379'), # If you're on Heroku
+        'DB': 0,
+        'timeout': 1800,
+    },
+    'low': {
+        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379'), # If you're on Heroku
+        'DB': 0,
+        'timeout': 1800,
+    },
+}
