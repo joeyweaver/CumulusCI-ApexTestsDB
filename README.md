@@ -14,4 +14,4 @@ A Heroku web application to analyze and report on the test execution data genera
     
 # Upload API Tokens
 
-The upload API endpoint uses django-tokenapi to authorize requests.  For instructions on getting a token, visit [https://github.com/jpulgarin/django-tokenapi#usage]
+The upload API endpoint uses django-tokenapi to authorize requests.  For instructions on getting a token, visit https://github.com/jpulgarin/django-tokenapi#usage
