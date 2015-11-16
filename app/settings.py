@@ -110,17 +110,17 @@ STATIC_URL = '/static/'
 
 RQ_QUEUES = {
     'default': {
-        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379'), # If you're on Heroku
+        'URL': os.getenv('REDIS_URL', 'redis://localhost:6379'), # If you're on Heroku
         'DB': 0,
         'timeout': 1800,
     },
     'high': {
-        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379'), # If you're on Heroku
+        'URL': os.getenv('REDIS_URL', 'redis://localhost:6379'), # If you're on Heroku
         'DB': 0,
         'timeout': 1800,
     },
     'low': {
-        'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379'), # If you're on Heroku
+        'URL': os.getenv('REDIS_URL', 'redis://localhost:6379'), # If you're on Heroku
         'DB': 0,
         'timeout': 1800,
     },
