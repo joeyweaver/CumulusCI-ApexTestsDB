@@ -37,7 +37,7 @@ def import_test_results(results):
 
     # If a results_url was passed, retrieve the file and parse it
     if 'results_url' in results:
-        results_file = urllib.open(results['results_url'])
+        results_file = urllib.urlopen(results['results_url'])
         results['results'] = json.loads(results_file.read())
 
     package_url = results['package'].get('url', None)
