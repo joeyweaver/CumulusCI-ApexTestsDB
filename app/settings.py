@@ -90,6 +90,7 @@ DATABASES = {
 
 import dj_database_url
 DATABASES['default'] =  dj_database_url.config(default=DATABASES['default'])
+DATABASES['default']['CONN_MAX_AGE'] = 500
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
