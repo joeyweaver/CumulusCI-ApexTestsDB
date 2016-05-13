@@ -30,7 +30,7 @@ STATS_MAP = {
     'test_callouts': 'TESTING_LIMITS: Number of callouts',
 }
 
-@job
+@job('default', timeout=600)
 def import_test_results(results):
     classes = {}
     methods = {}
